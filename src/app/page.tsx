@@ -1,20 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Header from '@/components/Header';
 import Timer from '@/components/Timer';
 import ArtworkCard from '@/components/ArtworkCard';
 import DrawingCanvas from '@/components/DrawingCanvas';
 import Leaderboard from '@/components/Leaderboard';
-import { currentRound, mockLeaderboard, activeParticipants } from '@/lib/mockData';
+import { currentRound, mockSubmissions, activeParticipants } from '@/lib/mockData';
+import { calculateLeaderboard } from '@/lib/leaderboardUtils';
 import { Submission } from '@/types/arena';
 import { Brush, Pencil, Eraser, Users, Heart, Eye } from 'lucide-react';
 
 export default function ArenaPage() {
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
+  // Initialize with mock submissions for demonstration
+  const [submissions, setSubmissions] = useState<Submission[]>(mockSubmissions);
   const [selectedTool, setSelectedTool] = useState<'brush' | 'pencil' | 'eraser'>('brush');
   const [selectedColor, setSelectedColor] = useState('hsl(300, 100%, 50%)');
   const [selectedSize, setSelectedSize] = useState(5);
+
+  // Calculate leaderboard dynamically from submissions (only artists with likes > 0)
+  const leaderboard = useMemo(() => {
+    return calculateLeaderboard(submissions);
+  }, [submissions]);
 
   const handleSubmitDrawing = (imageDataUrl: string, walletAddress: string) => {
     // Create submission from canvas drawing with user's wallet
@@ -29,6 +36,32 @@ export default function ArenaPage() {
     };
 
     setSubmissions([newSubmission, ...submissions]);
+  };
+
+  const handleLike = (submissionId: string, userWallet: string) => {
+    setSubmissions(prevSubmissions =>
+      prevSubmissions.map(submission => {
+        if (submission.id === submissionId) {
+          const hasLiked = submission.likedBy.includes(userWallet);
+          if (hasLiked) {
+            // Unlike
+            return {
+              ...submission,
+              likes: submission.likes - 1,
+              likedBy: submission.likedBy.filter(wallet => wallet !== userWallet)
+            };
+          } else {
+            // Like
+            return {
+              ...submission,
+              likes: submission.likes + 1,
+              likedBy: [...submission.likedBy, userWallet]
+            };
+          }
+        }
+        return submission;
+      })
+    );
   };
 
   return (
@@ -222,8 +255,8 @@ export default function ArenaPage() {
                 )}
               </div>
 
-              {/* Leaderboard */}
-              <Leaderboard entries={mockLeaderboard} />
+              {/* Leaderboard - dynamically calculated, only shows artists with likes */}
+              <Leaderboard entries={leaderboard} />
             </div>
           </div>
         </div>
@@ -237,7 +270,11 @@ export default function ArenaPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
               {submissions.map((submission) => (
-                <ArtworkCard key={submission.id} submission={submission} />
+                <ArtworkCard
+                  key={submission.id}
+                  submission={submission}
+                  onLike={handleLike}
+                />
               ))}
             </div>
           </div>

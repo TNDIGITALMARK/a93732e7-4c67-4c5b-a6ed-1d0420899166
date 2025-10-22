@@ -1,25 +1,20 @@
 'use client';
 
-import { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Submission } from '@/types/arena';
 
 interface ArtworkCardProps {
   submission: Submission;
   userWallet?: string;
+  onLike?: (submissionId: string, userWallet: string) => void;
 }
 
-export default function ArtworkCard({ submission, userWallet }: ArtworkCardProps) {
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(submission.likes);
+export default function ArtworkCard({ submission, userWallet = 'default-wallet', onLike }: ArtworkCardProps) {
+  const hasLiked = submission.likedBy.includes(userWallet);
 
   const handleLike = () => {
-    if (liked) {
-      setLikes(likes - 1);
-      setLiked(false);
-    } else {
-      setLikes(likes + 1);
-      setLiked(true);
+    if (onLike) {
+      onLike(submission.id, userWallet);
     }
   };
 
@@ -38,13 +33,13 @@ export default function ArtworkCard({ submission, userWallet }: ArtworkCardProps
           <button
             onClick={handleLike}
             className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all ${
-              liked
+              hasLiked
                 ? 'bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(var(--accent-pink))] text-white'
                 : 'bg-white/10 backdrop-blur text-white hover:bg-white/20'
             }`}
           >
-            <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
-            <span>{likes}</span>
+            <Heart className={`w-4 h-4 ${hasLiked ? 'fill-current' : ''}`} />
+            <span>{submission.likes}</span>
           </button>
         </div>
       </div>

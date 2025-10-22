@@ -14,12 +14,20 @@ export default function Leaderboard({ entries }: LeaderboardProps) {
         Top Artists
       </h2>
 
-      <div className="space-y-3">
-        {entries.map((entry, index) => (
-          <div
-            key={entry.walletAddress}
-            className="flex items-center justify-between py-2 px-3 rounded-[8px] bg-[hsl(var(--canvas-bg))]/50 hover:bg-[hsl(var(--canvas-bg))] transition-colors"
-          >
+      {entries.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-sm text-[hsl(var(--text-secondary))]">
+            No artists with likes yet. Start voting!
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="space-y-3">
+            {entries.map((entry, index) => (
+              <div
+                key={entry.walletAddress}
+                className="flex items-center justify-between py-2 px-3 rounded-[8px] bg-[hsl(var(--canvas-bg))]/50 hover:bg-[hsl(var(--canvas-bg))] transition-colors"
+              >
             {/* Rank & Wallet */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <div className="flex-shrink-0 w-6 text-center">
@@ -52,15 +60,17 @@ export default function Leaderboard({ entries }: LeaderboardProps) {
                 </div>
               </div>
             </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Legend */}
-      <div className="mt-4 pt-4 border-t border-[hsl(var(--border))] flex justify-end gap-6 text-xs text-[hsl(var(--text-secondary))]">
-        <div>LIKES</div>
-        <div>WINS</div>
-      </div>
+          {/* Legend */}
+          <div className="mt-4 pt-4 border-t border-[hsl(var(--border))] flex justify-end gap-6 text-xs text-[hsl(var(--text-secondary))]">
+            <div>LIKES</div>
+            <div>WINS</div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
