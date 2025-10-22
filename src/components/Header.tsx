@@ -1,7 +1,5 @@
 'use client';
 
-import WalletButton from './WalletButton';
-
 export default function Header() {
   return (
     <header className="flex items-center justify-between mb-8">
@@ -65,9 +63,6 @@ export default function Header() {
           Community
         </a>
       </nav>
-
-      {/* Wallet Button */}
-      <WalletButton />
     </header>
   );
 }
