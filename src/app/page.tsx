@@ -16,12 +16,12 @@ export default function ArenaPage() {
   const [selectedColor, setSelectedColor] = useState('hsl(300, 100%, 50%)');
   const [selectedSize, setSelectedSize] = useState(5);
 
-  const handleSubmitDrawing = (imageDataUrl: string) => {
-    // Create submission from canvas drawing
+  const handleSubmitDrawing = (imageDataUrl: string, walletAddress: string) => {
+    // Create submission from canvas drawing with user's wallet
     const newSubmission: Submission = {
       id: Date.now().toString(),
       artworkUrl: imageDataUrl,
-      walletAddress: 'anonymous',
+      walletAddress: walletAddress,
       likes: 0,
       timestamp: new Date(),
       roundId: currentRound.id,
@@ -188,10 +188,13 @@ export default function ArenaPage() {
                             alt="Submission"
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="text-xs font-bold text-white flex items-center gap-1">
+                          <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2">
+                            <span className="text-xs font-bold text-white flex items-center gap-1 mb-1">
                               <Heart className="w-3 h-3" />
                               {submission.likes}
+                            </span>
+                            <span className="text-[10px] font-mono text-[hsl(var(--accent-cyan))] truncate w-full text-center">
+                              {submission.walletAddress}
                             </span>
                           </div>
                         </div>

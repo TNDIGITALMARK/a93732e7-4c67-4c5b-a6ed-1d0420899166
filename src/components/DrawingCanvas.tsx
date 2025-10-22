@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Trash2, Download } from 'lucide-react';
 
 interface DrawingCanvasProps {
-  onSubmit: (imageDataUrl: string) => void;
+  onSubmit: (imageDataUrl: string, walletAddress: string) => void;
   selectedColor: string;
   selectedSize: number;
   selectedTool: 'brush' | 'pencil' | 'eraser';
@@ -19,6 +19,7 @@ export default function DrawingCanvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -98,11 +99,12 @@ export default function DrawingCanvas({
 
   const handleSubmit = () => {
     const canvas = canvasRef.current;
-    if (!canvas || !hasDrawn) return;
+    if (!canvas || !hasDrawn || !walletAddress.trim()) return;
 
     const imageDataUrl = canvas.toDataURL('image/png');
-    onSubmit(imageDataUrl);
+    onSubmit(imageDataUrl, walletAddress.trim());
     clearCanvas();
+    setWalletAddress('');
   };
 
   const downloadImage = () => {
@@ -151,10 +153,25 @@ export default function DrawingCanvas({
         </button>
       </div>
 
+      {/* Wallet Input */}
+      <div className="space-y-2">
+        <label htmlFor="wallet-address" className="block text-xs font-semibold uppercase tracking-wider text-[hsl(var(--text-secondary))]">
+          Your Wallet Address
+        </label>
+        <input
+          id="wallet-address"
+          type="text"
+          value={walletAddress}
+          onChange={(e) => setWalletAddress(e.target.value)}
+          placeholder="Enter your Solana wallet address"
+          className="w-full h-[44px] rounded-[8px] bg-[hsl(var(--canvas-bg))] border border-[hsl(var(--border))] text-[hsl(var(--text-primary))] placeholder-[hsl(var(--text-secondary))]/60 px-4 focus:border-[hsl(var(--accent-purple))] focus:ring-2 focus:ring-[hsl(var(--accent-purple))]/20 transition-all"
+        />
+      </div>
+
       {/* Submit Button */}
       <button
         onClick={handleSubmit}
-        disabled={!hasDrawn}
+        disabled={!hasDrawn || !walletAddress.trim()}
         className="w-full gradient-button h-[44px] rounded-[8px] font-bold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Submit Artwork
