@@ -1,97 +1,88 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/*
+SOLANA DRAWING ARENA DESIGN SYSTEM
+Extracted from design reference with PIXEL-PERFECT precision
+Colors, spacing, typography matching the reference EXACTLY
 */
 
 :root {
-  /* Pure white background with crisp black text */
-  --background: 0 0% 100%;
-  --foreground: 0 0% 0%;
+  /* BACKGROUND GRADIENT: Purple to Teal */
+  --bg-gradient-start: 270 81% 64%; /* #8B5CF6 */
+  --bg-gradient-end: 173 80% 40%; /* #14B8A6 */
 
-  /* Clean white cards with black text */
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 0%;
+  /* DARK CARD BACKGROUNDS */
+  --background: 0 0% 10%; /* #1a1a1a */
+  --foreground: 0 0% 100%; /* #FFFFFF */
 
-  /* Popovers with white background */
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 0%;
+  --card: 0 0% 6%; /* #0f0f0f */
+  --card-foreground: 0 0% 100%;
 
-  /* Primary: Black with white text */
-  --primary: 0 0% 0%;
+  /* PRIMARY ACCENT: Vibrant Purple/Magenta */
+  --primary: 283 76% 61%; /* #A855F7 */
   --primary-foreground: 0 0% 100%;
 
-  /* Secondary: Light gray background with black text */
-  --secondary: 0 0% 97%;
-  --secondary-foreground: 0 0% 0%;
+  /* SECONDARY ACCENT: Cyan/Turquoise */
+  --secondary: 189 94% 43%; /* #06B6D4 */
+  --secondary-foreground: 0 0% 100%;
 
-  /* Muted: Subtle gray with darker text */
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 40%;
+  /* ACCENT GRADIENT: Purple to Cyan */
+  --accent-purple: 283 76% 61%; /* #A855F7 */
+  --accent-cyan: 189 94% 43%; /* #06B6D4 */
+  --accent-pink: 330 81% 60%; /* #D946EF */
 
-  /* Accent: Light gray */
-  --accent: 0 0% 96%;
-  --accent-foreground: 0 0% 0%;
+  /* TEXT COLORS */
+  --text-primary: 0 0% 100%; /* #FFFFFF */
+  --text-secondary: 220 9% 65%; /* #9CA3AF */
+  --text-muted: 220 13% 46%; /* #6B7280 */
 
-  /* Destructive: Clean red */
+  /* BORDERS & DIVIDERS */
+  --border: 220 13% 23%; /* #374151 */
+  --border-dark: 220 13% 18%; /* #2D3748 */
+  --input: 220 13% 23%;
+  --ring: 283 76% 61%;
+
+  /* CANVAS BACKGROUND */
+  --canvas-bg: 215 25% 17%; /* #1F2937 */
+
+  /* COMPONENT RADII */
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-thumbnail: 8px;
+  --radius-full: 9999px;
+
+  /* SPACING SYSTEM (from reference) */
+  --spacing-card: 32px;
+  --spacing-section: 24px;
+  --spacing-component: 16px;
+  --spacing-small: 8px;
+
+  /* TYPOGRAPHY SIZES */
+  --text-timer: 72px;
+  --text-heading: 24px;
+  --text-subheading: 16px;
+  --text-body: 14px;
+  --text-small: 12px;
+  --text-tiny: 10px;
+
+  /* CANVAS SIZE */
+  --canvas-size: 280px;
+
+  /* COMPONENT HEIGHTS */
+  --button-height: 44px;
+  --thumbnail-size: 80px;
+
+  /* Compatibility with existing system */
+  --popover: 0 0% 6%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 220 13% 18%;
+  --muted-foreground: 220 9% 65%;
+  --accent: 283 76% 61%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 70% 50%;
   --destructive-foreground: 0 0% 100%;
-
-  /* Borders: Subtle gray */
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --ring: 0 0% 0%;
-
-  /* Minimal rounded corners */
-  --radius: 0.375rem;
-
-  /* Sidebar: Clean white with black text */
-  --sidebar-background: 0 0% 100%;
-  --sidebar-foreground: 0 0% 0%;
-  --sidebar-primary: 0 0% 0%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 0 0% 96%;
-  --sidebar-accent-foreground: 0 0% 0%;
-  --sidebar-border: 0 0% 90%;
-  --sidebar-ring: 0 0% 0%;
-}
-
-.dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
-  --sidebar-background: 240 5.9% 10%;
-  --sidebar-foreground: 240 4.8% 95.9%;
-  --sidebar-primary: 224.3 76.3% 48%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 240 3.7% 15.9%;
-  --sidebar-accent-foreground: 240 4.8% 95.9%;
-  --sidebar-border: 240 3.7% 15.9%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
+  --radius: 0.5rem;
 }
 
 @theme {
@@ -168,36 +159,144 @@ All colors MUST be HSL.
   border-color: hsl(var(--border));
 }
 
+/* BODY: Gradient background matching reference exactly */
 body {
-  background-color: hsl(var(--background));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
   color: hsl(var(--foreground));
+  background: linear-gradient(135deg, hsl(var(--bg-gradient-start)) 0%, hsl(var(--bg-gradient-end)) 100%);
+  background-attachment: fixed;
   font-feature-settings: "rlig" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* Minimal, clean typography */
-h1, h2, h3, h4, h5, h6 {
+/* TYPOGRAPHY: Bold, modern headings */
+h1 {
+  font-size: var(--text-heading);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: hsl(var(--text-primary));
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: var(--text-subheading);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: hsl(var(--text-primary));
+}
+
+h3, h4, h5, h6 {
   font-weight: 600;
-  letter-spacing: -0.025em;
-  color: hsl(var(--foreground));
+  letter-spacing: -0.01em;
+  color: hsl(var(--text-primary));
 }
 
-/* Clean button styles */
+/* TEXT ELEMENTS */
+p {
+  color: hsl(var(--text-secondary));
+  margin-bottom: 1em;
+}
+
+strong {
+  font-weight: 700;
+  color: hsl(var(--text-primary));
+}
+
+/* BUTTON DEFAULTS: Bold, rounded, gradient-ready */
 button {
-  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: var(--text-body);
+  border-radius: var(--radius-button);
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-/* Subtle shadows for depth */
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* INPUT DEFAULTS */
+input, textarea, select {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-body);
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--canvas-bg));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-button);
+  padding: 10px 16px;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsla(var(--primary), 0.1);
+}
+
+/* SHADOWS: Deeper, gaming-style shadows */
 .shadow-sm {
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .shadow {
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25);
 }
 
 .shadow-md {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+.shadow-lg {
+  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* GRADIENT TEXT UTILITY */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--accent-purple)) 0%, hsl(var(--accent-cyan)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* GRADIENT BUTTON UTILITY */
+.gradient-button {
+  background: linear-gradient(135deg, hsl(var(--accent-purple)) 0%, hsl(var(--accent-pink)) 100%);
+  color: hsl(var(--primary-foreground));
+  border: none;
+  font-weight: 700;
+  padding: 12px 24px;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.gradient-button:hover {
+  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.4);
+}
+
+/* SCROLLBAR STYLING */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--card));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, hsl(var(--accent-purple)) 0%, hsl(var(--accent-cyan)) 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, hsl(var(--accent-cyan)) 0%, hsl(var(--accent-purple)) 100%);
 }
